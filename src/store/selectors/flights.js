@@ -12,11 +12,14 @@ const parseBusinessFlights = (flights) => {
     const departurePoint = flight.split(' -> ')[0];
     const arrivalPoint = flight.split(' -> ')[1];
     return {
-      id: flightId,
+      info: {
+        id: flightId,
+        type: 'business'
+      },
       departurePoint,
       arrivalPoint,
-      arrivalTime: moment(arrival),
-      departureTime: moment(departure),
+      arrivalTime: moment(arrival).valueOf(),
+      departureTime: moment(departure).valueOf(),
     }
   })
 }
@@ -26,11 +29,14 @@ const parseCheapFlights = (flights) => {
   return flightIds.map((flightId) => {
     const { arrival, departure, arrivalTime, departureTime } = get(flights, flightId);
     return {
-      id: flightId,
+      info: {
+        id: flightId,
+        type: 'cheap'
+      },
       departurePoint: departure,
       arrivalPoint: arrival,
-      arrivalTime: moment(arrivalTime),
-      departureTime: moment(departureTime),
+      arrivalTime: moment(arrivalTime).valueOf(),
+      departureTime: moment(departureTime).valueOf(),
     }
   })
 }
