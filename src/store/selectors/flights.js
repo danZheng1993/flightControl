@@ -11,16 +11,14 @@ const parseBusinessFlights = (flights) => {
     const { flight, arrival, departure } = get(flights, flightId);
     const departurePoint = flight.split(' -> ')[0];
     const arrivalPoint = flight.split(' -> ')[1];
-    return {
-      info: {
-        id: flightId,
-        type: 'business'
-      },
+    return [
+      flightId,
+      'business',
       departurePoint,
       arrivalPoint,
-      arrivalTime: moment(arrival).valueOf(),
-      departureTime: moment(departure).valueOf(),
-    }
+      moment(departure).format('YYYY-MM-DD h:mm'),
+      moment(arrival).format('YYYY-MM-DD h:mm'),
+    ]
   })
 }
 
@@ -28,16 +26,14 @@ const parseCheapFlights = (flights) => {
   const flightIds = keys(flights);
   return flightIds.map((flightId) => {
     const { arrival, departure, arrivalTime, departureTime } = get(flights, flightId);
-    return {
-      info: {
-        id: flightId,
-        type: 'cheap'
-      },
-      departurePoint: departure,
-      arrivalPoint: arrival,
-      arrivalTime: moment(arrivalTime).valueOf(),
-      departureTime: moment(departureTime).valueOf(),
-    }
+    return [
+      flightId,
+      'cheap',
+      departure,
+      arrival,
+      moment(departureTime).format('YYYY-MM-DD h:mm'),
+      moment(arrivalTime).format('YYYY-MM-DD h:mm'),
+    ]
   })
 }
 
@@ -47,6 +43,6 @@ export const getFlightsInProcessableFormat = createSelector(
   (cheapFlights, businessFlights) => {
     const parsedCheapFlights = parseCheapFlights(cheapFlights);
     const parsedBusinessFlights = parseBusinessFlights(businessFlights);
-    return [...parsedCheapFlights, parsedBusinessFlights];
+    return [...parsedCheapFlights, ...parsedBusinessFlights];
   }
 )

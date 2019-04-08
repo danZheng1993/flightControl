@@ -1,5 +1,8 @@
 import { handleActions } from 'redux-actions';
 import { produce } from 'immer';
+import { set } from 'lodash';
+
+import { parseToCheapFlight, parseToBusinessFlight } from 'utils/data';
 
 import { actionTypes } from '../actions/flights';
 
@@ -39,6 +42,26 @@ export default handleActions(
     [actionTypes.GET_CHEAP_FLIGHTS_FAILURE]: (state, action) =>
       produce(state, draft => {
         draft.cheapLoading = false;
+      }),
+    [actionTypes.CREATE_FLIGHT]: (state, action) =>
+      produce(state, draft => {
+        const { payload } = action;
+        const { id, type } = payload;
+        if (type === 'cheap') {
+          set(draft.cheapFlights, `${id}`, parseToCheapFlight(payload));
+        } else if (type === 'business') {
+          set(draft.businessFlights, `${id}`, parseToBusinessFlight(payload));
+        }
+      }),
+    [actionTypes.UPDATE_FLIGHT]: (state, action) =>
+      produce(state, draft => {
+        const { payload } = action;
+        const { id, type } = payload;
+        if (type === 'cheap') {
+          set(draft.cheapFlights, `${id}`, parseToCheapFlight(payload));
+        } else if (type === 'business') {
+          set(draft.businessFlights, `${id}`, parseToBusinessFlight(payload));
+        }
       }),
   },
   initialState

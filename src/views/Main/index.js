@@ -1,69 +1,77 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import FilterableTable from 'react-filterable-table';
+import MUIDataTable from "mui-datatables";
 import { withRouter } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import styled from 'styled-components';
+
+import { Wrapper, Container, Spliter } from 'components';
 
 import { GetFlights } from 'store/actions/flights';
 import { getFlightsInProcessableFormat } from 'store/selectors/flights';
 
-const Wrapper = styled.div`
-  padding: 30px
-`;
-
-const Container = styled(Paper)`
-  padding: 20px;
-`;
-
 class Main extends React.Component {
   componentDidMount() {
-    this.props.GetFlights();
+    const { flights, GetFlights } = this.props;
+    if (flights.length === 0) {
+      GetFlights();
+    }
   }
 
-  getFields = () => {
-    return [
-      { name: 'departurePoint', displayName: 'Departure', inputFilterable: true, sortable: true },
-      { name: 'arrivalPoint', displayName: 'Arrival', inputFilterable: true, sortable: true },
-      { name: 'departureTime', displayName: 'Depart At', inputFilterable: true, sortable: true, render: this.renderTime },
-      { name: 'arrivalTime', displayName: 'Arrive At', inputFilterable: true, sortable: true, render: this.renderTime },
-      { name: 'info', displayName: '', render: this.renderEditor },
-    ]
-  }
-
-  editFlight = (info) => () => {
-    const { id, type } = info;
+  onRowClick = (info) => {
+    const [id, type] = info;
     this.props.history.push(`/edit?id=${id}&type=${type}`);
   }
 
-  renderTime = (time) => {
-    return moment(time.value).format('YYYY-MM-DD h:mm:ss a');
+  getTableOptions = () => {
+    return {
+      selectableRows: false,
+      onRowClick: this.onRowClick
+    }
   }
 
-  renderEditor = (info) => {
-    return (
-      <Button variant="contained" color="primary" onClick={this.editFlight(info.value)}>
-        Edit
-      </Button>
-    )
+  getColumns = () => {
+    return [
+      {
+        name: 'id',
+        label: 'Flight ID',
+        options: {
+          filter: false,
+          sort: false,
+        }
+      },
+      { name: 'type', label: 'Flight Type' },
+      { name: 'departurePoint', label: 'Departure' },
+      { name: 'arrivalPoint', label: 'Arrival' },
+      { name: 'departureTime', label: 'Depart At'},
+      { name: 'arrivalTime', label: 'Arrive At'},
+    ]
+  }
+
+  handleCreate = () => {
+    this.props.history.push('/edit')
   }
 
   render() {
     const { flights } = this.props;
-    const fields = this.getFields();
+    const columns = this.getColumns();
     return (
       <Wrapper>
         <Container>
-          <FilterableTable
-            nameSpace="Flight"
-            initialSort="name"
+          <MUIDataTable
+            title={"Flight List"}
             data={flights}
-            fields={fields}
-            noRecordsMessage="There are no flights"
-            noFilteredRecordsMessage="No flight match your filters!"
+            columns={columns}
+            options={this.getTableOptions()}
           />
+          <Spliter />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleCreate}
+          >
+            Create One
+          </Button>
         </Container>
       </Wrapper>
     );
