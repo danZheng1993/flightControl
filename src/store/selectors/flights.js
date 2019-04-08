@@ -16,8 +16,8 @@ const parseBusinessFlights = (flights) => {
       'business',
       departurePoint,
       arrivalPoint,
-      moment(departure).format('YYYY-MM-DD h:mm'),
-      moment(arrival).format('YYYY-MM-DD h:mm'),
+      moment(departure).format('YYYY-MM-DD h:mm:s'),
+      moment(arrival).format('YYYY-MM-DD h:mm:s'),
     ]
   })
 }
@@ -31,8 +31,8 @@ const parseCheapFlights = (flights) => {
       'cheap',
       departure,
       arrival,
-      moment(departureTime).format('YYYY-MM-DD h:mm'),
-      moment(arrivalTime).format('YYYY-MM-DD h:mm'),
+      moment(departureTime).format('YYYY-MM-DD h:mm:s'),
+      moment(arrivalTime).format('YYYY-MM-DD h:mm:s'),
     ]
   })
 }

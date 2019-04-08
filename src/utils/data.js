@@ -1,9 +1,10 @@
 import moment from 'moment';
 
 export const parseToCheapFlight = (flight) => {
-  const { arrivalPoint, departurePoint, arrivalTime, departureTime } = flight;
+  const { id, type, arrivalPoint, departurePoint, arrivalTime, departureTime } = flight;
   return {
-    ...flight,
+    id,
+    type,
     arrival: arrivalPoint,
     departure: departurePoint,
     arrivalTime: moment(arrivalTime).valueOf(),
@@ -17,6 +18,6 @@ export const parseToBusinessFlight = (flight) => {
     uuid: id,
     flight: `${departurePoint} -> ${arrivalPoint}`,
     departure: moment(departureTime).format(),
-    arrivalTime: moment(arrivalTime).format(),
+    arrival: moment(arrivalTime).format(),
   }
 }
