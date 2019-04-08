@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import MUIDataTable from "mui-datatables";
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
