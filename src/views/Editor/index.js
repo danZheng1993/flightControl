@@ -12,7 +12,7 @@ import { getFlightsInProcessableFormat } from 'store/selectors/flights';
 
 import { TypeSelector, InfoEditor } from './components';
 
-class Editor extends React.Component {
+export class Editor extends React.Component {
   constructor(props) {
     super(props);
     const { location, flights } = props;

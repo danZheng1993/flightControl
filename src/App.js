@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
-import MomentUtils from '@date-io/moment';
 
 import AppRoutes from 'navigation';
 
@@ -13,11 +11,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <React.Fragment>
-              <AppRoutes />
-            </React.Fragment>
-          </MuiPickersUtilsProvider>
+          <AppRoutes />
         </PersistGate>
       </Provider>
     );

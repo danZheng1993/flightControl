@@ -9,7 +9,7 @@ import { Wrapper, Container, Spliter } from 'components';
 import { GetFlights } from 'store/actions/flights';
 import { getFlightsInProcessableFormat } from 'store/selectors/flights';
 
-class Main extends React.Component {
+export class Main extends React.Component {
   componentDidMount() {
     const { flights, GetFlights } = this.props;
     if (flights.length === 0) {
