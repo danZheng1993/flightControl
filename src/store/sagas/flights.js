@@ -1,25 +1,9 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
-import { set } from 'lodash';
-
-import { actionTypes } from '../actions/flights';
 
 import { fetchBusinessFlights, fetchCheapFlights } from 'api';
+import { parseCheapFlights, parseBusinessFlights } from 'utils/data';
 
-const parseBusinessFlights = (flights) => {
-  const result = {};
-  flights.forEach((flight) => {
-    set(result, flight.uuid, flight);
-  });
-  return result;
-}
-
-const parseCheapFlights = (flights) => {
-  const result = {};
-  flights.forEach((flight) => {
-    set(result, flight.id, flight);
-  });
-  return result;
-}
+import { actionTypes } from '../actions/flights';
 
 function* getFlights(action) {
   yield put({ type: actionTypes.GET_BUSINESS_FLIGHTS });

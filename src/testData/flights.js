@@ -36,12 +36,10 @@ export const cheapFlights = {
   "9085754394544094000": {
     id: "9085754394544094000",
     type: "cheap",
-    departurePoint: "test",
-    departureTime: 1554694800000,
-    arrivalPoint: "test 1",
-    arrivalTime: 1554745980000,
-    arrival: "test 1",
-    departure: "test",
+    arrivalTime: 1554694800000,
+    departureTime: 1554745980000,
+    departure: "test 1",
+    arrival: "test",
   },
 };
 
@@ -54,7 +52,34 @@ export const businessFlights = {
   },
 };
 
+export const cheapFlightsArray = [
+  {
+    id: "9085754394544094000",
+    type: "cheap",
+    arrivalTime: 1554694800000,
+    departureTime: 1554745980000,
+    departure: "test 1",
+    arrival: "test",
+  },
+];
+
+export const businessFlightsArray = [
+  {
+    uuid: "549da066-bb5b-4d63-836c-00bbe2ccb4cb",
+    flight: "Floresta -> San Telmo",
+    departure: "2019-04-08T15:10:18.000Z",
+    arrival: "2019-04-08T16:50:04.000Z",
+  },
+];
+
 export const flightsArray = [
-  ["9085754394544094000", "cheap", "test", "test 1", "2019-04-08 11:40:0", "2019-04-09 1:53:0"],
+  ["9085754394544094000", "cheap", "test 1", "test", "2019-04-09 1:53:0", "2019-04-08 11:40:0"],
   ["549da066-bb5b-4d63-836c-00bbe2ccb4cb", "business", "Floresta", "San Telmo", "2019-04-08 11:10:18", "2019-04-09 12:50:4"]
-]
+];
+
+export const flightsInitialState = {
+  cheapFlights: {},
+  businessFlights: {},
+  businessLoading: false,
+  cheapLoading: false,
+}
